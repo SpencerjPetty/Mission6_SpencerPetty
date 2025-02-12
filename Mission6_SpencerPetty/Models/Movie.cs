@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Mission6_SpencerPetty.Models
-{
+{ // This is the model for the Movie object
     public class Movie
     {
 

@@ -3,9 +3,9 @@ using Mission6_SpencerPetty;
 
 namespace Mission6_SpencerPetty.Models
 {
-    public class MovieFormContext : DbContext
+    public class MovieFormContext : DbContext // This is the context for the Movie object
     {
-        public MovieFormContext(DbContextOptions<MovieFormContext> options) : base(options) 
+        public MovieFormContext(DbContextOptions<MovieFormContext> options) : base(options) // Constructor
         {
         }
 
