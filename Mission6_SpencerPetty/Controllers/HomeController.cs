@@ -26,6 +26,7 @@ namespace Mission6_SpencerPetty.Controllers
         [HttpGet]
         public IActionResult AddMovieForm() // Add Movie Form page
         {
+            ViewBag.Categories = _context.Categories.ToList(); // Get the categories from the database
             return View();
         }
         public IActionResult Confirmation() // Confirmation page
@@ -39,6 +40,42 @@ namespace Mission6_SpencerPetty.Controllers
             _context.Movies.Add(movie);
             _context.SaveChanges(); // Add and save the movie to the database
             return RedirectToAction("Confirmation");
+        }
+        
+        public IActionResult MovieList() // Movie List page
+        {
+            return View(_context.Movies.ToList());
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id) // Edit page
+        {
+            var recordToEdit = _context.Movies.Find(id);
+
+            ViewBag.Categories = _context.Categories.ToList(); // Get the categories from the database
+            return View("AddMovieForm", recordToEdit);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Movie updatedMovie)
+        {
+            _context.Update(updatedMovie);
+            _context.SaveChanges();
+            return RedirectToAction("MovieList");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var recordToDelete = _context.Movies.Find(id);
+            return View(recordToDelete);
+        }
+        [HttpPost]
+        public IActionResult Delete(Movie movie)
+        {
+            _context.Movies.Remove(movie);
+            _context.SaveChanges();
+            return RedirectToAction("MovieList");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

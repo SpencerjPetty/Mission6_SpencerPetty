@@ -2,33 +2,39 @@
 
 namespace Mission6_SpencerPetty.Models
 { // This is the model for the Movie object
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class Movie
     {
-
         [Key] // Marks this as the primary key
-        public int Id { get; set; } // Auto-incrementing primary key
-        
+        public int MovieId { get; set; } // Auto-incrementing primary key
+
+        [ForeignKey("CategoryId")] // Foreign key
+        public int? CategoryId { get; set; } // Nullable foreign key
+        public Category? Category { get; set; } // Navigation property
+
         [Required]
         public required string Title { get; set; }
 
         [Required]
-        public required string Director { get; set; }
-
-        [Required]
-        [Range(1900, 2100)]
+        [Range(1888, 2100, ErrorMessage = "Year must be 1888 or later.")]
         public int Year { get; set; }
 
-        [Required]
-        public required string Genre { get; set; }
+        public string? Director { get; set; }
+
+        public string? Rating { get; set; }
 
         [Required]
-        public required string Rating { get; set; }
-
-        public bool? Edited { get; set; }
+        public bool Edited { get; set; } // Required field (non-nullable boolean)
 
         public string? LentTo { get; set; }
+
+        [Required]
+        public bool CopiedToPlex { get; set; } // Required field (non-nullable boolean)
 
         [MaxLength(25)]
         public string? Notes { get; set; }
     }
+
 }
