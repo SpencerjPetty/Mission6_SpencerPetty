@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission6_SpencerPetty.Models;
 
 namespace Mission6_SpencerPetty.Controllers
@@ -27,24 +28,31 @@ namespace Mission6_SpencerPetty.Controllers
         public IActionResult AddMovieForm() // Add Movie Form page
         {
             ViewBag.Categories = _context.Categories.ToList(); // Get the categories from the database
-            return View();
-        }
-        public IActionResult Confirmation() // Confirmation page
-        {
-            return View();
+            return View(new Movie());
         }
 
         [HttpPost]
         public IActionResult AddMovieForm(Movie movie) // Add Movie Form POST
         {
-            _context.Movies.Add(movie);
-            _context.SaveChanges(); // Add and save the movie to the database
-            return RedirectToAction("Confirmation");
+                if (ModelState.IsValid == false) // If the form is not valid
+            {
+                ViewBag.Categories = _context.Categories.ToList(); // Get the categories from the database
+                return View(movie); // Return the form with the data
+            }
+            else
+            {
+                _context.Movies.Add(movie);
+                _context.SaveChanges(); // Add and save the movie to the database
+                return View("Confirmation", movie);
+            }
         }
         
         public IActionResult MovieList() // Movie List page
         {
-            return View(_context.Movies.ToList());
+            var movies = _context.Movies
+                .Include(m => m.Category)
+                .ToList();
+            return View(movies);
         }
 
         [HttpGet]

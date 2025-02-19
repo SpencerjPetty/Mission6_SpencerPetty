@@ -15,7 +15,7 @@ namespace Mission6_SpencerPetty.Models
         public Category? Category { get; set; } // Navigation property
 
         [Required]
-        public required string Title { get; set; }
+        public string Title { get; set; }
 
         [Required]
         [Range(1888, 2100, ErrorMessage = "Year must be 1888 or later.")]
