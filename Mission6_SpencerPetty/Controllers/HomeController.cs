@@ -65,7 +65,7 @@ namespace Mission6_SpencerPetty.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Movie updatedMovie)
+        public IActionResult Edit(Movie updatedMovie) // Edit Post
         {
             _context.Update(updatedMovie);
             _context.SaveChanges();
@@ -73,13 +73,13 @@ namespace Mission6_SpencerPetty.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id) // Show Delete Page
         {
             var recordToDelete = _context.Movies.Find(id);
             return View(recordToDelete);
         }
         [HttpPost]
-        public IActionResult Delete(Movie movie)
+        public IActionResult Delete(Movie movie) // Delete Post
         {
             _context.Movies.Remove(movie);
             _context.SaveChanges();
